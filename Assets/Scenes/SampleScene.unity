@@ -266,9 +266,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carrot
       objectReference: {fileID: 0}
+    - target: {fileID: 477992243473475826, guid: 0781efadee9d00746925256e1e54eb0a, type: 3}
+      propertyPath: m_TagString
+      value: Collectible
+      objectReference: {fileID: 0}
     - target: {fileID: 477992243473475827, guid: 0781efadee9d00746925256e1e54eb0a, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 477992243473475827, guid: 0781efadee9d00746925256e1e54eb0a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1186,9 +1190,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Burger
       objectReference: {fileID: 0}
+    - target: {fileID: 7307124428758934588, guid: 8bc164b9d49fb5240bbf5285d0b58cd9, type: 3}
+      propertyPath: m_TagString
+      value: Collectible
+      objectReference: {fileID: 0}
     - target: {fileID: 7307124428758934589, guid: 8bc164b9d49fb5240bbf5285d0b58cd9, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7307124428758934589, guid: 8bc164b9d49fb5240bbf5285d0b58cd9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1241,7 +1249,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8482751735827945558, guid: 914182e9e9748324fb5a29486fb2674b, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8482751735827945558, guid: 914182e9e9748324fb5a29486fb2674b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1287,6 +1295,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fox
       objectReference: {fileID: 0}
+    - target: {fileID: 8482751735827945559, guid: 914182e9e9748324fb5a29486fb2674b, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 914182e9e9748324fb5a29486fb2674b, type: 3}
 --- !u!1001 &1138161501
@@ -1298,7 +1310,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7673982997500931904, guid: 345fe324be8e0e94fa506847a4a9cddf, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7673982997500931904, guid: 345fe324be8e0e94fa506847a4a9cddf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1357,9 +1369,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lettuce
       objectReference: {fileID: 0}
+    - target: {fileID: 7918220146733327842, guid: 2eadea63c0dc51c4ab68e0f544764063, type: 3}
+      propertyPath: m_TagString
+      value: Collectible
+      objectReference: {fileID: 0}
     - target: {fileID: 7918220146733327843, guid: 2eadea63c0dc51c4ab68e0f544764063, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7918220146733327843, guid: 2eadea63c0dc51c4ab68e0f544764063, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1412,7 +1428,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8591533246323414042, guid: cded4561aa2f5344a9b1ada3378739d2, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8591533246323414042, guid: cded4561aa2f5344a9b1ada3378739d2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1457,6 +1473,10 @@ PrefabInstance:
     - target: {fileID: 8591533246323414043, guid: cded4561aa2f5344a9b1ada3378739d2, type: 3}
       propertyPath: m_Name
       value: Ant
+      objectReference: {fileID: 0}
+    - target: {fileID: 8591533246323414043, guid: cded4561aa2f5344a9b1ada3378739d2, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cded4561aa2f5344a9b1ada3378739d2, type: 3}
@@ -1598,6 +1618,10 @@ PrefabInstance:
     - target: {fileID: 1842392149745840637, guid: 60bbead4672f58946977732b3da0f918, type: 3}
       propertyPath: m_Name
       value: Gator
+      objectReference: {fileID: 0}
+    - target: {fileID: 1842392149745840637, guid: 60bbead4672f58946977732b3da0f918, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60bbead4672f58946977732b3da0f918, type: 3}
@@ -7373,7 +7397,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6658275594291457654, guid: 2b5acd18906b195489592cc9aafbefec, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6658275594291457654, guid: 2b5acd18906b195489592cc9aafbefec, type: 3}
       propertyPath: m_LocalPosition.x
