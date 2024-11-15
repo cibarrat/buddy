@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip attackSound;
     [SerializeField] private AudioClip collectSound;
     [SerializeField] private AudioClip stompSound;
+    [SerializeField] private AudioClip hitSound;
+    public GameManager gameManager;
+    public bool CanMove { get; set; }
     private Animator animator;
     private Rigidbody2D rigidBody;
     private Collider2D groundChecker;
@@ -36,7 +39,6 @@ public class PlayerController : MonoBehaviour
     private bool isLanded;
     private bool isFalling;
     private float airborneHorizVelocity;
-    private bool canMove;
 
     public const string IS_LANDED_NAME = "isLanded";
 
@@ -56,13 +58,13 @@ public class PlayerController : MonoBehaviour
         runCount = -1;
         jumpForce = minJumpForce;
         airborneHorizVelocity = 0;
-        canMove = true;
+        CanMove = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (canMove)
+        if (CanMove)
         {
             animator.SetBool("isFalling", false);
             animator.SetBool("isWalking", false);
