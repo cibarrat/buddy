@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     private Canvas HUD;
     private List<GameObject> Hearts = new List<GameObject>();
     private Vector2 lastHeartPosition;
+    public GameObject DefeatMenu;
+    public AudioSource actionSound;
 
     private void Awake()
     {
@@ -91,9 +93,30 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        bool isActive = DefeatMenu.activeSelf;
+        DefeatMenu.SetActive(!isActive);
         PlayerHealth = PlayerMaxHealth;
         DrawHearts(PlayerMaxHealth);
+        Time.timeScale = 0.0f;    
+    }
+    private IEnumerator LoadSceneAfterSound(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public void ReloadLeve()
+    {
+        Time.timeScale = 1.0f;
+        if (actionSound != null)
+        {
+            actionSound.Play();
+            StartCoroutine(LoadSceneAfterSound(actionSound.clip.length));
+        }
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
 }
