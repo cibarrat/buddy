@@ -28,6 +28,7 @@ public class Collectible : MonoBehaviour
                 break;
             case ItemType.VICTORY:
                 gameManager.victoryMenu.SetActive(true);
+                Time.timeScale = 0f;
                 break;
         }
     }

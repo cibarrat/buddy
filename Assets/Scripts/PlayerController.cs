@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
         isRunning = false;
         canJump = true;
         canDoubleJump = true;
-        isLanded = true;
+        isLanded = false;
         jumpCount = -1;
         runCount = -1;
         jumpForce = minJumpForce;
