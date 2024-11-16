@@ -313,6 +313,7 @@ MonoBehaviour:
   PlayerMaxHealth: 3
   DefeatMenu: {fileID: 2086715404910820156}
   actionSound: {fileID: 1346845792}
+  victoryMenuPrefab: {fileID: 2086715405481673710}
 --- !u!1001 &749330832
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -320,6 +321,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6658275594291457654}
     m_Modifications:
+    - target: {fileID: 2086715403841342169, guid: b7a56ca196c05d0448cdb2c9abdf2b9b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 583513262}
+    - target: {fileID: 2086715403841342169, guid: b7a56ca196c05d0448cdb2c9abdf2b9b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DefeatMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2086715405448836419, guid: b7a56ca196c05d0448cdb2c9abdf2b9b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5440942557189096202}
     - target: {fileID: 2086715405509482712, guid: b7a56ca196c05d0448cdb2c9abdf2b9b, type: 3}
       propertyPath: actionSound
       value: 
@@ -422,5 +435,23 @@ RectTransform:
 --- !u!1 &2086715404910820156 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2086715405390486188, guid: b7a56ca196c05d0448cdb2c9abdf2b9b, type: 3}
+  m_PrefabInstance: {fileID: 749330832}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &583513262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2086715404910820156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad992ff76efdad8468ca111ce771b720, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionSound: {fileID: 1346845792}
+--- !u!1 &2086715405481673710 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2086715404888826494, guid: b7a56ca196c05d0448cdb2c9abdf2b9b, type: 3}
   m_PrefabInstance: {fileID: 749330832}
   m_PrefabAsset: {fileID: 0}
