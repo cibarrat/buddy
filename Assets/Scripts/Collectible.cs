@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Collectible : MonoBehaviour
@@ -9,7 +10,8 @@ public class Collectible : MonoBehaviour
     enum ItemType
     {
         HEAL = 1,
-        POWER_UP = 2
+        POWER_UP = 2,
+        VICTORY =3
     }
 
     private void Start()
@@ -24,7 +26,12 @@ public class Collectible : MonoBehaviour
             case ItemType.HEAL:
                 gameManager.IncreaseHealth(1);
                 break;
+            case ItemType.VICTORY:
+                gameManager.victoryMenu.SetActive(true);
+                break;
         }
+
+
     }
 
 }

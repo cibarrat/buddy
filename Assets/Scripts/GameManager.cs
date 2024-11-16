@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject HeartPrefab;
     public bool ShowHUD;
     [SerializeField] private int PlayerMaxHealth;
+    public GameObject victoryMenu;
     public int PlayerHealth { get; private set; }
     private GameObject HUD;
     private List<GameObject> Hearts = new List<GameObject>();
@@ -135,6 +136,25 @@ public class GameManager : MonoBehaviour
         }
         victoryMenuInstance.SetActive(true);
         Debug.Log("set active tru");
+    }
+    public void ChangeScene(int scene)
+    {
+        Time.timeScale = 1f;
+        if (actionSound != null)
+        {
+            actionSound.Play();
+            StartCoroutine(LoadSceneAfterSound(scene, actionSound.clip.length));
+        }
+        else
+        {
+            SceneManager.LoadScene(scene);
+        }
+    }
+    private IEnumerator LoadSceneAfterSound(int scene, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(scene);
+        victoryMenu.gameObject.SetActive(false);
     }
 
 }
