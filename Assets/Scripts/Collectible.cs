@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class Collectible : MonoBehaviour
 {
-    [SerializeField] ItemType type;
+    [field: SerializeField] public ItemType type { get; private set; }
     GameManager gameManager;
-    enum ItemType
+    public enum ItemType
     {
         HEAL = 1,
         POWER_UP = 2,
@@ -30,8 +30,6 @@ public class Collectible : MonoBehaviour
                 gameManager.victoryMenu.SetActive(true);
                 break;
         }
-
-
     }
 
 }

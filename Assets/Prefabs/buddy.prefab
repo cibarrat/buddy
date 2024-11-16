@@ -45,7 +45,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0025076866, y: -1.0010871}
+  m_Offset: {x: 0.023799896, y: -1.0010871}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -56,7 +56,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.38943386, y: 0.036993265}
+  m_Size: {x: 0.5171871, y: 0.036993265}
   m_EdgeRadius: 0
 --- !u!1 &7673982997500931917
 GameObject:
@@ -240,11 +240,13 @@ MonoBehaviour:
   hitStun: 0.5
   hitInvulnerabilityTime: 1
   hitKnockback: 1.5
+  invincibilityDuration: 5
   jumpSound: {fileID: 8300000, guid: 894ffd33e03b6e74382e57e40a525b16, type: 3}
   attackSound: {fileID: 8300000, guid: 7ab27756871dcf0448903e16fb866a73, type: 3}
   collectSound: {fileID: 8300000, guid: 613c887fd0c48e94588cf439a65f861d, type: 3}
   stompSound: {fileID: 8300000, guid: a8df0d2f1141a01428e6851095f4b187, type: 3}
   hitSound: {fileID: 8300000, guid: 50d6beebd3d28a245b4eca9a5a6991e8, type: 3}
+  shield: {fileID: 5821383996812854750, guid: 1d01d44c2a0c9734eb7d1fd658063814, type: 3}
 --- !u!82 &993811509
 AudioSource:
   m_ObjectHideFlags: 0
