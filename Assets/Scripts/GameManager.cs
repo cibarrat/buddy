@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     private Vector2 lastHeartPosition;
     public GameObject DefeatMenu;
     public AudioSource actionSound;
+    public GameObject victoryMenuPrefab;
+    private GameObject victoryMenuInstance;
 
     private void Awake()
     {
@@ -121,6 +123,18 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+    }
+    public void ShowVictoryMenu()
+    {
+        Debug.Log("Victory menu");
+        if (victoryMenuInstance == null)
+        {
+            Debug.Log("era null");
+            victoryMenuInstance = Instantiate(victoryMenuPrefab);
+            Debug.Log("creado");
+        }
+        victoryMenuInstance.SetActive(true);
+        Debug.Log("set active tru");
     }
 
 }
