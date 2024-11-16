@@ -387,6 +387,74 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0781efadee9d00746925256e1e54eb0a, type: 3}
+--- !u!1 &28710086
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 28710089}
+  - component: {fileID: 28710088}
+  - component: {fileID: 28710087}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &28710087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28710086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
+--- !u!114 &28710088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28710086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &28710089
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28710086}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &38976426
 GameObject:
   m_ObjectHideFlags: 0
@@ -1447,17 +1515,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7307124428758934587, guid: 8bc164b9d49fb5240bbf5285d0b58cd9, type: 3}
-      propertyPath: m_SortingOrder
-      value: 32
-      objectReference: {fileID: 0}
     - target: {fileID: 7307124428758934588, guid: 8bc164b9d49fb5240bbf5285d0b58cd9, type: 3}
       propertyPath: m_Name
       value: Burger
-      objectReference: {fileID: 0}
-    - target: {fileID: 7307124428758934588, guid: 8bc164b9d49fb5240bbf5285d0b58cd9, type: 3}
-      propertyPath: m_TagString
-      value: Collectible
       objectReference: {fileID: 0}
     - target: {fileID: 7307124428758934589, guid: 8bc164b9d49fb5240bbf5285d0b58cd9, type: 3}
       propertyPath: m_RootOrder
@@ -1560,10 +1620,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fox
       objectReference: {fileID: 0}
-    - target: {fileID: 8482751735827945559, guid: 914182e9e9748324fb5a29486fb2674b, type: 3}
-      propertyPath: m_TagString
-      value: Enemy
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 914182e9e9748324fb5a29486fb2674b, type: 3}
 --- !u!1001 &1138161501
@@ -1573,6 +1629,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 38660939, guid: 345fe324be8e0e94fa506847a4a9cddf, type: 3}
+      propertyPath: m_Size.y
+      value: 0.036993265
+      objectReference: {fileID: 0}
+    - target: {fileID: 38660939, guid: 345fe324be8e0e94fa506847a4a9cddf, type: 3}
+      propertyPath: m_Offset.y
+      value: -1.0010871
+      objectReference: {fileID: 0}
     - target: {fileID: 7673982997500931904, guid: 345fe324be8e0e94fa506847a4a9cddf, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -1739,10 +1803,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ant
       objectReference: {fileID: 0}
-    - target: {fileID: 8591533246323414043, guid: cded4561aa2f5344a9b1ada3378739d2, type: 3}
-      propertyPath: m_TagString
-      value: Enemy
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cded4561aa2f5344a9b1ada3378739d2, type: 3}
 --- !u!1 &1434047179
@@ -1883,10 +1943,6 @@ PrefabInstance:
     - target: {fileID: 1842392149745840637, guid: 60bbead4672f58946977732b3da0f918, type: 3}
       propertyPath: m_Name
       value: Gator
-      objectReference: {fileID: 0}
-    - target: {fileID: 1842392149745840637, guid: 60bbead4672f58946977732b3da0f918, type: 3}
-      propertyPath: m_TagString
-      value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60bbead4672f58946977732b3da0f918, type: 3}
@@ -5870,6 +5926,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1886217740, guid: 2b5acd18906b195489592cc9aafbefec, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 519420031}
     - target: {fileID: 6505791047114346402, guid: 2b5acd18906b195489592cc9aafbefec, type: 3}
       propertyPath: m_Name
       value: GameManager

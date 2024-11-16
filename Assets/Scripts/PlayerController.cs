@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,20 +15,22 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxDoubleJumpForce = 4f;
     [SerializeField] private float jumpLag = 0.2f;
     [SerializeField] private float runStartThreshold = 0.5f;
-    [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private float hitStun = 0.5f;
+    [SerializeField] private float hitInvulnerabilityTime = 1f;
+    [SerializeField] private float hitKnockback = 1.5f;
     [SerializeField] private AudioClip jumpSound;
     [SerializeField] private AudioClip attackSound;
     [SerializeField] private AudioClip collectSound;
     [SerializeField] private AudioClip stompSound;
     [SerializeField] private AudioClip hitSound;
-    public GameManager gameManager;
+    private GameManager gameManager;
     public bool CanMove { get; set; }
     private Animator animator;
     private Rigidbody2D rigidBody;
     private Collider2D groundChecker;
     private AudioSource audioSource;
+    private SpriteRenderer spriteRenderer;
     private bool isWalking;
-    private bool isJumping;
     private bool isRunning;
     private bool canRun;
     private bool canJump;
@@ -35,10 +38,12 @@ public class PlayerController : MonoBehaviour
     private float jumpCount;
     private float jumpForce;
     private float runCount;
-    private float lastDirection;
     private bool isLanded;
     private bool isFalling;
+    private bool isInvincible;
     private float airborneHorizVelocity;
+
+    private List<Collider2D> ignoredColliders = new List<Collider2D>();
 
     public const string IS_LANDED_NAME = "isLanded";
 
@@ -47,10 +52,11 @@ public class PlayerController : MonoBehaviour
         groundChecker = GetComponentInChildren<BoxCollider2D>();
         animator = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
-        audioSource = GetComponent<AudioSource>();  
+        audioSource = GetComponent<AudioSource>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        gameManager = GameManager.Instance;
         isWalking = false;
         isRunning = false;
-        isJumping = false;
         canJump = true;
         canDoubleJump = true;
         isLanded = true;
@@ -71,9 +77,8 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isRunning", false);
             animator.SetBool(IS_LANDED_NAME, false);
             float vertical = Input.GetAxisRaw("Vertical");
-            rigidBody.velocity += Vector2.right * airborneHorizVelocity;
             walk();
-            jump();
+            checkForJump();
             if (rigidBody.velocity.y < -0.0001)
             {
                 isFalling = true;
@@ -91,10 +96,13 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isWalking", isWalking);
             animator.SetBool("isRunning", isRunning);
         }
-        text.text = $"isFalling: {isFalling}\nisLanded: {isLanded}\nCan Jump: {canJump}" +
-            $"\nCan Double Jump: {canDoubleJump}\nisWalking: {isWalking}\nisRunning: {isRunning}\nCan run: {canRun}\nrunCount {runCount}\nAirborne Velocity X: {airborneHorizVelocity}" +
-            $"\nVelocity X: {rigidBody.velocity.x}";
-
+        if (isInvincible)
+        {
+            spriteRenderer.enabled = !spriteRenderer.enabled; 
+        } else
+        {
+            spriteRenderer.enabled = true;
+        }
     }
 
     private void walk()
@@ -138,7 +146,7 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    private void jump()
+    private void checkForJump()
     {
         bool isDoubleJump = false;
         if (jumpCount > -1)
@@ -172,22 +180,39 @@ public class PlayerController : MonoBehaviour
         }
         if (jumpCount > jumpLag)
         {
-            airborneHorizVelocity = rigidBody.velocity.x;
             audioSource.PlayOneShot(jumpSound);
-            rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
-            jumpCount = -1;
+            jump(jumpForce, isDoubleJump);
         }
     }
 
+    public void jump(float jumpForce, bool isDoubleJump)
+    {
+        airborneHorizVelocity = rigidBody.velocity.x;
+        rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
+        jumpCount = -1;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Tilemap"))
-        {
-            canJump = true;
-            canDoubleJump = true;
-            isLanded = true;
-        }   
+        switch (collision.gameObject.tag) {
+            case("Tilemap"):
+        
+                canJump = true;
+                canDoubleJump = true;
+                isLanded = true;
+                    break;
+            case ("Enemy"):        
+                audioSource.PlayOneShot(stompSound);
+                GameObject.Destroy(collision.gameObject);
+                animator.SetTrigger("jump");
+                jump(minJumpForce, true);
+                break;
+            case ("Collectible"):
+                collision.GetComponent<Collectible>().Effect();
+                GameObject.Destroy(collision.gameObject);
+                break;
+        
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -196,6 +221,53 @@ public class PlayerController : MonoBehaviour
         {
             canJump = false;
             isLanded = false;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            if (isInvincible)
+            {
+                Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>());
+                ignoredColliders.Add(collision.collider);
+            }
+            else
+            {
+                audioSource.PlayOneShot(hitSound);
+                StartCoroutine(PlayerHit(1));
+            }
+        }
+    }
+
+    public IEnumerator PlayerHit(int dmg)
+    {
+        animator.SetTrigger("Hit");
+        gameManager.DamagePlayer(dmg);
+        rigidBody.velocity = new Vector2(transform.localScale.x * -hitKnockback, hitKnockback);
+        StartCoroutine(BecomeInvulnerable(hitInvulnerabilityTime));
+        TogglePlayerMovement();
+        yield return new WaitForSeconds(hitStun);
+        TogglePlayerMovement();
+    }
+
+    public void TogglePlayerMovement()
+    {
+        CanMove = !CanMove;
+    }
+
+    IEnumerator BecomeInvulnerable(float time)
+    {
+        isInvincible = true;
+        yield return new WaitForSeconds(time);
+        isInvincible = false;
+        foreach (Collider2D collider in ignoredColliders)
+        {
+            if (collider)
+            {
+                Physics2D.IgnoreCollision(collider, GetComponent<Collider2D>(), false);
+            }
         }
     }
 }
