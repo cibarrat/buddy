@@ -229,8 +229,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyDeath: {fileID: 764675093023319258, guid: ec6417dafe1ec7a4b803efa3556ee270, type: 3}
-  walkSpeed: 4
-  runSpeed: 7
+  walkSpeed: 3
+  runSpeed: 5
   maxJumpForce: 7
   minJumpForce: 5
   minDoubleJumpForce: 2

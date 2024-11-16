@@ -101,9 +101,8 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         DefeatMenu.SetActive(true);
-        PlayerHealth = PlayerMaxHealth;
-        DrawHearts(PlayerMaxHealth);
         Time.timeScale = 0.0f;
+        PlayerHealth = PlayerMaxHealth;
     }
     private IEnumerator LoadSceneAfterSound(float delay)
     {
