@@ -21,6 +21,9 @@ public class Menu : MonoBehaviour
         {
             SceneManager.LoadScene(scene);
         }
+        GameManager.Instance.ShowHUD = true;
+        GameManager.Instance.IncreaseHealth(3);
+        GameManager.Instance.DefeatMenu.SetActive(false);
     }
 
     public void ExitGame()

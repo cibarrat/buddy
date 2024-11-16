@@ -9,10 +9,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     [SerializeField] private GameObject HeartPrefab;
-    [SerializeField] private bool ShowHUD;
+    public bool ShowHUD;
     [SerializeField] private int PlayerMaxHealth;
     public int PlayerHealth { get; private set; }
-    private Canvas HUD;
+    private GameObject HUD;
     private List<GameObject> Hearts = new List<GameObject>();
     private Vector2 lastHeartPosition;
     public GameObject DefeatMenu;
@@ -30,17 +30,21 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    private void Update()
-    {
-        HUD.enabled = ShowHUD;            
-    }
-
     private void Start()
     {
         PlayerHealth = PlayerMaxHealth;
-        HUD = GetComponentInChildren<Canvas>();
+        HUD = transform.Find("HUD").gameObject;
+        HUD.GetComponent<Canvas>().worldCamera = Camera.main;
         DrawHearts(PlayerHealth);
+    }
+
+    private void Update()
+    {
+        HUD.SetActive(ShowHUD);     
+        if (!HUD.GetComponent<Canvas>().worldCamera)
+        {
+            HUD.GetComponent<Canvas>().worldCamera = Camera.main;
+        }
     }
 
     public void DrawHearts(int number)
@@ -48,9 +52,9 @@ public class GameManager : MonoBehaviour
         Hearts.Clear();
         for (int i = 0; i < number; i++)
         {
-            GameObject heart = Instantiate(HeartPrefab, HUD.gameObject.transform);
+            GameObject heart = Instantiate(HeartPrefab, HUD.transform);
             Hearts.Add(heart);
-            heart.transform.localPosition = new Vector2(heart.transform.localPosition.x + (i * 50), heart.transform.localPosition.y);
+            heart.transform.localPosition = new Vector2(heart.transform.localPosition.x + (i * 180), heart.transform.localPosition.y);
             lastHeartPosition = heart.transform.localPosition;
         }
     }
@@ -93,11 +97,8 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         bool isActive = DefeatMenu.activeSelf;
         DefeatMenu.SetActive(!isActive);
-        PlayerHealth = PlayerMaxHealth;
-        DrawHearts(PlayerMaxHealth);
         Time.timeScale = 0.0f;    
     }
     private IEnumerator LoadSceneAfterSound(float delay)
@@ -108,6 +109,7 @@ public class GameManager : MonoBehaviour
     public void ReloadLeve()
     {
         Time.timeScale = 1.0f;
+        PlayerHealth = PlayerMaxHealth;
         if (actionSound != null)
         {
             actionSound.Play();
