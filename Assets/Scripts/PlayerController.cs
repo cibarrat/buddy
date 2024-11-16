@@ -7,6 +7,8 @@ using UnityEngine.Tilemaps;
 
 public class PlayerController : MonoBehaviour
 {
+    public GameObject EnemyDeath;
+
     [SerializeField] private float walkSpeed = 5f;
     [SerializeField] private float runSpeed = 10f;
     [SerializeField] private float maxJumpForce = 7f;
@@ -201,9 +203,14 @@ public class PlayerController : MonoBehaviour
                 canDoubleJump = true;
                 isLanded = true;
                     break;
-            case ("Enemy"):        
+            case ("Enemy"):
                 audioSource.PlayOneShot(stompSound);
                 GameObject.Destroy(collision.gameObject);
+                
+                // Instantiate the EnemyDeath animation and destroy it after one second.
+                GameObject clone = Instantiate(EnemyDeath,collision.transform.position , collision.transform.rotation);
+                Destroy(clone, 1.0f);
+
                 animator.SetTrigger("jump");
                 jump(minJumpForce, true);
                 break;
