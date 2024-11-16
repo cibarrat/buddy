@@ -7,6 +7,8 @@ TagManager:
   - Tilemap
   - Music
   - SFX
+  - Enemy
+  - Collectible
   layers:
   - Default
   - TransparentFX
