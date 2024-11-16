@@ -228,8 +228,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 006ed3c5e674230488e0beea0f89abd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 4
-  runSpeed: 7
+  EnemyDeath: {fileID: 764675093023319258, guid: ec6417dafe1ec7a4b803efa3556ee270, type: 3}
+  walkSpeed: 3
+  runSpeed: 5
   maxJumpForce: 7
   minJumpForce: 5
   minDoubleJumpForce: 2
