@@ -20,11 +20,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float hitStun = 0.5f;
     [SerializeField] private float hitInvulnerabilityTime = 1f;
     [SerializeField] private float hitKnockback = 1.5f;
+    [SerializeField] private float invincibilityDuration = 5f;
     [SerializeField] private AudioClip jumpSound;
     [SerializeField] private AudioClip attackSound;
     [SerializeField] private AudioClip collectSound;
     [SerializeField] private AudioClip stompSound;
     [SerializeField] private AudioClip hitSound;
+    [SerializeField] private GameObject shield;
     private GameManager gameManager;
     public bool CanMove { get; set; }
     private Animator animator;
@@ -42,8 +44,10 @@ public class PlayerController : MonoBehaviour
     private float runCount;
     private bool isLanded;
     private bool isFalling;
-    private bool isInvincible;
+    private bool isInvulnerable;
     private float airborneHorizVelocity;
+    private bool isInvincible;
+    
 
     private HashSet<Collider2D> ignoredColliders = new HashSet<Collider2D>();
 
@@ -97,7 +101,7 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isWalking", isWalking);
             animator.SetBool("isRunning", isRunning);
         }
-        if (isInvincible)
+        if (isInvulnerable)
         {
             spriteRenderer.enabled = !spriteRenderer.enabled; 
         } else
@@ -205,18 +209,17 @@ public class PlayerController : MonoBehaviour
             case ("Enemy"):
                 if (isFalling)
                 {
-                    audioSource.PlayOneShot(stompSound);
-                    GameObject.Destroy(collision.gameObject);
-
-                    // Instantiate the EnemyDeath animation and destroy it after one second.
-                    GameObject clone = Instantiate(EnemyDeath,collision.transform.position , collision.transform.rotation);
-                    Destroy(clone, 1.0f);
+                    DefeatEnemy(collision.gameObject);
                     
                     animator.SetTrigger("jump");
                     jump(minDoubleJumpForce);
                 }
                 break;
             case ("Collectible"):
+                if (collision.GetComponent<Collectible>().type == Collectible.ItemType.POWER_UP)
+                {
+                    StartCoroutine(BecomeInvincible(invincibilityDuration));
+                }
                 collision.GetComponent<Collectible>().Effect();
                 GameObject.Destroy(collision.gameObject);
                 break;
@@ -237,12 +240,15 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            if (isInvincible)
+            if (isInvulnerable)
             {
                 Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>());
                 ignoredColliders.Add(collision.collider);
             }
-            else
+            else if (isInvincible)
+            {
+                DefeatEnemy(collision.gameObject);
+            } else
             {
                 audioSource.PlayOneShot(hitSound);
                 StartCoroutine(PlayerHit(1));
@@ -252,13 +258,24 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy") && isInvincible)
+        if (collision.gameObject.CompareTag("Enemy") && isInvulnerable)
         {
             Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>());
             ignoredColliders.Add(collision.collider);
             
         }
     }
+
+    private void DefeatEnemy(GameObject enemy)
+    {
+                audioSource.PlayOneShot(stompSound);
+        GameObject.Destroy(enemy);
+
+        // Instantiate the EnemyDeath animation and destroy it after one second.
+        GameObject clone = Instantiate(EnemyDeath, enemy.transform.position, enemy.transform.rotation);
+        Destroy(clone, 0.5f);
+    }
+
     public IEnumerator PlayerHit(int dmg)
     {
         animator.SetTrigger("Hit");
@@ -281,9 +298,9 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator BecomeInvulnerable(float time)
     {
-        isInvincible = true;
+        isInvulnerable = true;
         yield return new WaitForSeconds(time);
-        isInvincible = false;
+        isInvulnerable = false;
         foreach (Collider2D collider in ignoredColliders)
         {
             if (collider)
@@ -291,5 +308,17 @@ public class PlayerController : MonoBehaviour
                 Physics2D.IgnoreCollision(collider, GetComponent<Collider2D>(), false);
             }
         }
+    }
+
+    IEnumerator BecomeInvincible(float time)
+    {
+        isInvincible = true;
+        GameObject invincibility = GameObject.Instantiate(shield, gameObject.transform);
+        invincibility.transform.localPosition = new Vector2(0,-0.5f);
+        invincibility.GetComponent<SpriteRenderer>().sortingLayerName = "Player";
+        invincibility.GetComponent<SpriteRenderer>().sortingOrder = 1;
+        yield return new WaitForSeconds(time);
+        GameObject.Destroy(invincibility);
+        isInvincible = false;
     }
 }
