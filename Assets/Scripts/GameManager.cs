@@ -97,9 +97,10 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        bool isActive = DefeatMenu.activeSelf;
-        DefeatMenu.SetActive(!isActive);
-        Time.timeScale = 0.0f;    
+        DefeatMenu.SetActive(true);
+        PlayerHealth = PlayerMaxHealth;
+        DrawHearts(PlayerMaxHealth);
+        Time.timeScale = 0.0f;
     }
     private IEnumerator LoadSceneAfterSound(float delay)
     {
@@ -108,8 +109,9 @@ public class GameManager : MonoBehaviour
     }
     public void ReloadLeve()
     {
+        bool isActive = DefeatMenu.activeSelf;
+        DefeatMenu.SetActive(!isActive);
         Time.timeScale = 1.0f;
-        PlayerHealth = PlayerMaxHealth;
         if (actionSound != null)
         {
             actionSound.Play();

@@ -2,26 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
-public class PauseMenu : MonoBehaviour
+public class DefeatMenu : MonoBehaviour
 {
     public AudioSource actionSound;
-    [SerializeField] private GameObject pause;
 
-    private void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.P))
-        {
-            pause.SetActive(true);
-            Time.timeScale = 0f;
-        }
-    }
-    public void Resume()
-    {
-        Time.timeScale = 1f;
-        pause.SetActive(false);
-        
-    }
     public void ChangeScene(int scene)
     {
         Time.timeScale = 1f;
@@ -39,7 +23,6 @@ public class PauseMenu : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         SceneManager.LoadScene(scene);
-        pause.gameObject.SetActive(false);
+        this.gameObject.SetActive(false);
     }
 }
-
