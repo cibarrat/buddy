@@ -259,7 +259,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0
+  m_TransitionDuration: 0.248077
   m_TransitionOffset: 0
   m_ExitTime: 0.51612896
   m_HasExitTime: 0
@@ -587,7 +587,7 @@ AnimatorController:
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
-    m_DefaultBool: 1
+    m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
   - m_Name: jump
     m_Type: 9
@@ -667,10 +667,10 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isWalking
+    m_ConditionEvent: isRunning
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: isWalking
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: isLanded
@@ -706,7 +706,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.000000014901161
+  m_TransitionDuration: 0.000000007450581
   m_TransitionOffset: 0
   m_ExitTime: 0.24999996
   m_HasExitTime: 0
