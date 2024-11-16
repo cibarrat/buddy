@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
     private bool isInvincible;
     private float airborneHorizVelocity;
 
-    private List<Collider2D> ignoredColliders = new List<Collider2D>();
+    private HashSet<Collider2D> ignoredColliders = new HashSet<Collider2D>();
 
     public const string IS_LANDED_NAME = "isLanded";
 
@@ -69,7 +69,6 @@ public class PlayerController : MonoBehaviour
         CanMove = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (CanMove)
@@ -183,11 +182,11 @@ public class PlayerController : MonoBehaviour
         if (jumpCount > jumpLag)
         {
             audioSource.PlayOneShot(jumpSound);
-            jump(jumpForce, isDoubleJump);
+            jump(jumpForce);
         }
     }
 
-    public void jump(float jumpForce, bool isDoubleJump)
+    public void jump(float jumpForce)
     {
         airborneHorizVelocity = rigidBody.velocity.x;
         rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
@@ -204,15 +203,18 @@ public class PlayerController : MonoBehaviour
                 isLanded = true;
                     break;
             case ("Enemy"):
-                audioSource.PlayOneShot(stompSound);
-                GameObject.Destroy(collision.gameObject);
-                
-                // Instantiate the EnemyDeath animation and destroy it after one second.
-                GameObject clone = Instantiate(EnemyDeath,collision.transform.position , collision.transform.rotation);
-                Destroy(clone, 1.0f);
+                if (isFalling)
+                {
+                    audioSource.PlayOneShot(stompSound);
+                    GameObject.Destroy(collision.gameObject);
 
-                animator.SetTrigger("jump");
-                jump(minJumpForce, true);
+                    // Instantiate the EnemyDeath animation and destroy it after one second.
+                    GameObject clone = Instantiate(EnemyDeath,collision.transform.position , collision.transform.rotation);
+                    Destroy(clone, 1.0f);
+                    
+                    animator.SetTrigger("jump");
+                    jump(minDoubleJumpForce);
+                }
                 break;
             case ("Collectible"):
                 collision.GetComponent<Collectible>().Effect();
@@ -248,10 +250,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy") && isInvincible)
+        {
+            Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>());
+            ignoredColliders.Add(collision.collider);
+            
+        }
+    }
     public IEnumerator PlayerHit(int dmg)
     {
         animator.SetTrigger("Hit");
         gameManager.DamagePlayer(dmg);
+        if (gameManager.PlayerHealth <= 0)
+        {
+            CanMove = false;
+        }
         rigidBody.velocity = new Vector2(transform.localScale.x * -hitKnockback, hitKnockback);
         StartCoroutine(BecomeInvulnerable(hitInvulnerabilityTime));
         TogglePlayerMovement();
